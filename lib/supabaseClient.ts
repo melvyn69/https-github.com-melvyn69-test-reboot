@@ -1,17 +1,16 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Utilisation des variables d'environnement Vite (Vercel injectera ces valeurs)
-// Cast de import.meta pour éviter l'erreur TS "Property 'env' does not exist on type 'ImportMeta'"
-const supabaseUrl = (import.meta as any).env.VITE_SUPABASE_URL;
-const supabaseAnonKey = (import.meta as any).env.VITE_SUPABASE_ANON_KEY;
+// Utilisation sécurisée des variables d'environnement avec fallback
+const supabaseUrl = import.meta.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://olpgvdlwnipademsocvc.supabase.co";
+const supabaseAnonKey = import.meta.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9scGd2ZGx3bmlwYWRlbXNvY3ZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NzI3ODIsImV4cCI6MjA4MTQ0ODc4Mn0.v-8JTdoosrLMi63iXXGYlrkLvnI5nAz97XlUGs8cP4Q";
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("⚠️ Les clés Supabase sont manquantes dans les variables d'environnement.");
+  console.error("⚠️ Les clés Supabase sont manquantes.");
 }
 
 export const supabase = createClient(
-  supabaseUrl || '', 
-  supabaseAnonKey || ''
+  supabaseUrl, 
+  supabaseAnonKey
 );
 
 export const signInWithGoogle = async () => {
