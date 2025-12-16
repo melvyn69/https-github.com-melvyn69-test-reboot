@@ -1,10 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 import { Review, Tone } from "../types";
 
-// Initialisation de Gemini avec la clé fournie
-// Dans un environnement de prod, cette clé devrait être sécurisée côté serveur (Supabase Edge Function)
-const apiKey = process.env.API_KEY || 'AIzaSyB7fDa6Ua7ZBx6A9-w1dkr8axMSeZg_sfk';
-const ai = new GoogleGenAI({ apiKey });
+// Initialisation sécurisée suivant les guidelines @google/genai
+// La clé API doit être définie dans process.env.API_KEY
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateReviewResponse = async (
   review: Review,
@@ -44,6 +43,6 @@ export const generateReviewResponse = async (
     return response.text || "Impossible de générer une réponse pour le moment.";
   } catch (error) {
     console.error("Erreur lors de la génération de la réponse Gemini:", error);
-    throw new Error("Erreur de l'IA. Vérifiez votre clé API.");
+    return "Erreur lors de la communication avec l'IA. Veuillez réessayer plus tard.";
   }
 };
