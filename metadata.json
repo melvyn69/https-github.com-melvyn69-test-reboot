@@ -1,0 +1,5 @@
+{
+  "name": "Reviewflow AI",
+  "description": "Gestion d'avis clients avec réponses générées par IA Gemini.",
+  "requestFramePermissions": []
+}
